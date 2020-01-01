@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.BankMapper.xml">
+	<insert id="insertBank" parameterType="map">
+		INSERT INTO tbl_bank(bno, bname, pw)
+		VALUES(seq_bank.nextVAL, #{bname}, #{pw})
+	</insert>
+ 
+ 	<update id="plusMoney" parameterType="map">
+ 		UPDATE tbl_bank
+		SET money = money + #{money}
+		WHERE bno = #{bno}
+ 	</update>
+ 	
+ 	<select id="viewMoney" resultType="Integer">
+ 		SELECT money FROM tbl_bank
+ 		WHERE bno = #{bno}
+ 	</select>
+ 	
+ 	<update id="minusMoney" parameterType="map">
+ 		UPDATE tbl_bank 
+ 		SET money = money - #{money}
+ 		WHERE bno = #{bno} AND pw = #{pw}
+ 	</update>
+ 	
+ 	<select id="viewBank" resultType="Bank.BankDTO">
+ 		SELECT * FROM tbl_bank 	
+ 	</select>
+ 	
+ 	<select id="searchBank" resultType="Bank.BankDTO">
+ 		SELECT * FROM tbl_bank
+ 		WHERE bname LIKE '%'||#{keyword}||'%'
+ 	</select>
+ 	
+ 	<delete id="deleteBank" parameterType="Integer">
+ 		DELETE FROM tbl_bank
+ 		WHERE bno = #{bno}
+ 	</delete>
+</mapper>

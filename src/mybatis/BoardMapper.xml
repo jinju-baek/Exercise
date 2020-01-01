@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.BoardMapper.xml">
+	<insert id="insertBoard" parameterType="map">
+		INSERT INTO tbl_board(bno, title, content, writer)
+		VALUES(seq_board.nextVAL, #{title}, #{content}, #{writer})
+	</insert>
+	
+	<update id="updateBoard" parameterType="map">
+		UPDATE tbl_board
+		SET title = #{title}, content = #{content}, writer = #{writer}
+		WHERE bno = #{bno}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="map">
+		DELETE FROM tbl_board
+		WHERE bno = #{bno}
+	</delete>
+	
+	<select id="selectBoard" resultType="JJBoard2.BoardDTO">
+		SELECT * FROM tbl_board
+	</select>
+	
+	<select id="searchBoard" resultType="JJBoard2.BoardDTO">
+		SELECT * FROM tbl_board
+		WHERE title LIKE '%'||#{keyword}||'%'
+	</select>
+	
+	<select id="viewBoard" resultType="JJBoard2.BoardDTO">
+		SELECT * FROM tbl_board
+		WHERE bno = #{bno}
+	</select>
+	
+	<select id="plusViewcnt" parameterType="Integer">
+		UPDATE tbl_board
+		SET viewcnt = viewcnt + 1
+		WHERE bno = #{bno}
+	</select>
+	
+	<select id="sortBaord" resultType="JJBoard2.BoardDTO">
+		SELECT * FROM tbl_board
+		ORDER BY viewcnt DESC
+	</select>
+
+</mapper>
